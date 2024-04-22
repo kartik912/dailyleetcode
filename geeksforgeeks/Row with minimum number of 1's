@@ -1,0 +1,15 @@
+class Solution {
+  public:
+    int minRow(int n, int m, vector<vector<int>> a) {
+        int min_ct=INT_MAX, ans=0;
+        int ct=0;
+        for(int i=n-1;i>=0;i--) {
+            ct=0;
+            for(int j=0;j<m;j++) {
+                if(a[i][j] == 1) ct++;
+            }
+            if(ct <= min_ct){ min_ct = ct; ans = i;}
+        }
+        return ans+1;
+    }
+};
