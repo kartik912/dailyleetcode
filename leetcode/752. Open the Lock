@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int openLock(vector<string>& deadends, string target) {
+        unordered_set<string> nodes(deadends.begin(), deadends.end());
+
+        queue<string> q;
+        q.push("0000");
+        if(nodes.count("0000")==true)return -1;
+        nodes.insert("0000");
+        int ans=0;
+        while(!q.empty()) {
+            int s = q.size();
+            while(s--) {
+                string curr = q.front();
+                if(curr == target) return ans;
+                q.pop();
+                for(int i=0;i<4;i++) {
+                    char up = curr[i]=='9'?'0':curr[i]+1;
+                    char down = curr[i]=='0'?'9':curr[i]-1;
+                    string temp=curr;
+                    temp[i]=up;
+                    if(!nodes.count(temp)){q.push(temp);nodes.insert(temp);}
+                    temp[i]=down;
+                    if(!nodes.count(temp)){q.push(temp);nodes.insert(temp);}
+                }
+            }
+            ans++;
+        }
+        
+        return -1;
+
+    }
+};
+
+first we have 2 possibility for all the 4 digits : either we will increase or decrease by 1
+so , we do this for all the nodes and are there are total 4 nodes so each node will have a max of 8 nodes and so on.
+but if we encounter any node that is in the deadend so we do not proceed further on that node.
+
+we will be using bfs and keep pushing the node in the queue
+and we will keep doing this untill we reach the target node and then we return the level of the bfs.
+
+edge case = if "0000" is in the deadend, then we can return -1 as we cannot go anywhere from that.
