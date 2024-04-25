@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int longestIdealString(string s, int k) {
+        unordered_map<char,int> mp;
+        vector<int> dp(26,0);
+
+        for(int i=0;i<s.size();i++) {
+            char ch = s[i];
+            int ct=0;
+            for(int i=-k;i<=k;i++) {
+                if(mp[ch+i]) ct = max(ct, dp[ch-'a'+i]);
+            }
+            dp[ch-'a'] = 1;
+            if(ct!=0) dp[ch-'a'] += ct;
+            mp[ch]++;
+        }
+
+        int ans = 0;
+        for(auto it : dp) ans = max(ans, it);
+        return ans;
+    }
+};
