@@ -1,0 +1,20 @@
+class Solution {
+public:
+    long long wonderfulSubstrings(string word) {
+        vector<long long> mp(1024, 0);
+        long long res=0;
+        int prefixXOR = 0;
+        mp[prefixXOR] = 1;
+
+        for(auto it : word) {
+            int ind = it -'a';
+            prefixXOR ^= 1 << ind;
+            res += mp[prefixXOR];
+            for(int i=0;i<10;i++) {
+                res += mp[prefixXOR ^ (1 << i)];
+            }
+            mp[prefixXOR]++;
+        }
+        return res;
+    }
+};
