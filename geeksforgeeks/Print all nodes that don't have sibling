@@ -1,0 +1,17 @@
+void rec(Node* node, vector<int> &res) {
+    if(!node) return;
+    if(node->left and !node->right) res.push_back(node->left->data);
+    if(node->right and !node->left) res.push_back(node->right->data);
+    rec(node->left,res);
+    rec(node->right,res);
+}
+vector<int> noSibling(Node* node)
+{
+    vector<int> res;
+    rec(node, res);
+    if (res.empty()) {
+        res.push_back(-1);
+    }
+    sort(res.begin(), res.end());
+    return res;
+}
