@@ -1,0 +1,60 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+
+    ListNode* rev(ListNode* head) {
+        ListNode *curr = head, *nex=head, *prev=NULL;
+        while(nex) {
+            nex = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = nex;
+        }
+        return prev;
+    }
+
+    ListNode *addTwoNode(ListNode *num1, ListNode *num2) {
+        ListNode*p1 = num1, *p2 = num2;
+        ListNode* res = new ListNode(0);
+        ListNode* temp = res;
+        int sum=0, carry=0;
+        while(p1 and p2) {
+            sum = p1->val + p2->val;
+            if(carry) sum += carry;
+            temp->next = new ListNode(sum%10);
+            temp = temp->next;
+            carry = sum/10;
+            p1=p1->next;
+            p2 = p2->next;
+        }
+        if(carry) temp->next = new ListNode(carry);
+        return res->next;
+    }
+
+    ListNode* doubleIt(ListNode* head) {
+        ListNode* copy = new ListNode(head->val);
+        ListNode* temp1 = copy;
+        ListNode* temp = head->next;
+        while(temp) {
+            temp1->next = new ListNode(temp->val);
+            temp = temp->next;
+            temp1 = temp1->next;
+        }
+
+        ListNode* num1 = rev(head);
+        ListNode* num2 = rev(copy);
+        // return num1;
+
+        ListNode* res = addTwoNode(num1, num2);
+        return rev(res);
+    }
+};
