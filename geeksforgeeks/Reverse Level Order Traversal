@@ -1,0 +1,18 @@
+void rec(vector<Node*> v, vector<int> &res) {
+    if(v.size() == 0) return;
+    vector<Node*> temp;
+    for(auto it : v) {
+        if(it->left) temp.push_back(it->left);
+        if(it->right) temp.push_back(it->right);
+    }
+    rec(temp, res);
+    for(auto it : temp) res.push_back(it->data);
+}
+vector<int> reverseLevelOrder(Node *root)
+{
+    vector<Node*> v;
+    vector<int> res;
+    v.push_back(root);
+    rec(v, res);
+    return res;
+}
